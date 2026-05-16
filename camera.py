@@ -59,11 +59,7 @@ while True:
         break
     
 
-
-    frame = cv2.putText(frame,'Esc - Sair',(40,40),cv2.FONT_HERSHEY_DUPLEX,1,(0,0,0),2)
-    frame = cv2.putText(frame,'Espaco - Tirar foto',(40,80),cv2.FONT_HERSHEY_DUPLEX,1,(0,0,0),2)
     frame = cv2.putText(frame,'Aluno: '+ nomeV,(800,40),cv2.FONT_HERSHEY_DUPLEX,1,(0,0,0),2)
-    frame = cv2.putText(frame,'Nº de fotos tiradas: '+ str(img_counter),(800,80),cv2.FONT_HERSHEY_DUPLEX,1,(0,0,0),2)
     frame = cv2.putText(frame,datetime.now().strftime("%d/%m/%Y %H:%M:%S"),(850,620),cv2.FONT_HERSHEY_DUPLEX,1,(0,0,0),2)
 
     k = cv2.waitKey(1)
@@ -78,6 +74,10 @@ while True:
         img_counter += 1
         cv2.imshow("gravar", frame)
         time.sleep(0.67)
+
+    frame = cv2.putText(frame,'Nº de fotos tiradas: '+ str(img_counter),(800,80),cv2.FONT_HERSHEY_DUPLEX,1,(0,0,0),2)
+    frame = cv2.putText(frame,'Esc - Sair',(40,40),cv2.FONT_HERSHEY_DUPLEX,1,(0,0,0),2)
+    frame = cv2.putText(frame,'Espaco - Tirar foto',(40,80),cv2.FONT_HERSHEY_DUPLEX,1,(0,0,0),2)
 
     cv2.imshow("gravar", frame)
 

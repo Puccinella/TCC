@@ -1,7 +1,4 @@
 from deepface import DeepFace
 import cv2
 
-resultado = DeepFace.find(img_path='testes/wagnerTeste.jpg',db_path='banco')
-
-for x in range(len(resultado)):
-    print(resultado[x])
+DeepFace.stream(db_path='banco')

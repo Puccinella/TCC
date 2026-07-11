@@ -1,13 +1,16 @@
 import cv2
+import time
 from deepface import DeepFace
 cam = cv2.VideoCapture(0)
 cam.set(cv2.CAP_PROP_FRAME_WIDTH, 1280)
 cam.set(cv2.CAP_PROP_FRAME_HEIGHT, 720)
 cv2.namedWindow("gravar")
+tI=time.time()
 count = 0
 verificado=False
 match=''
 nome=''
+
 x,y,height,width=0,0,0,0
 while True:
     ret, frame = cam.read()
@@ -21,12 +24,12 @@ while True:
     if k%256 == 27:
         print("Escape hit, closing...")
         break
-    
     count+=1
-    if count == 10:
-        try: match=DeepFace.find(frame,'banco')
+    if count%20==0:
+        try: match=DeepFace.find(frame,'banco','Dlib')
         except: 
             nome="N/A"
+            x,y,height,width=0,0,0,0
             verificado=False
         else: 
             if not match[0].empty:
@@ -38,9 +41,8 @@ while True:
                 verificado = True
             else:
                 nome = "N/A"
+                x,y,height,width=0,0,0,0
                 verificado = False
-        count=0
-
 
     frame = cv2.putText(frame,'match:'+nome,(x,y-10),cv2.FONT_HERSHEY_DUPLEX,1,(0,0,0),2)
     frame = cv2.rectangle(frame,(x,y),(x+width,y+height),(0,0,200),2)
@@ -50,3 +52,5 @@ while True:
 cam.release()
 
 cv2.destroyAllWindows()
+
+import menu

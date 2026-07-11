@@ -26,7 +26,7 @@ while True:
     if count == 10:
         try: match=DeepFace.find(frame,'banco')
         except: 
-            nome="quem e esse neguinho?????"
+            nome="N/A"
             verificado=False
         else: 
             if not match[0].empty:
@@ -37,13 +37,13 @@ while True:
                 nome = str(match[0].at[0, "identity"]).split('\\')[1]
                 verificado = True
             else:
-                nome = "quem e esse neguinho?????"
+                nome = "N/A"
                 verificado = False
         count=0
 
 
-    frame = cv2.putText(frame,'match:'+nome,(x,y),cv2.FONT_HERSHEY_DUPLEX,1,(0,0,0),2)
-    frame = cv2.rectangle(frame,(x,y),(x+width,y+height),(0,0,0),1)
+    frame = cv2.putText(frame,'match:'+nome,(x,y-10),cv2.FONT_HERSHEY_DUPLEX,1,(0,0,0),2)
+    frame = cv2.rectangle(frame,(x,y),(x+width,y+height),(0,0,200),2)
 
     cv2.imshow("gravar", frame)
 

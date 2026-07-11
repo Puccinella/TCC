@@ -9,11 +9,10 @@ cam = cv2.VideoCapture(0)
 cam.set(cv2.CAP_PROP_FRAME_WIDTH, 1280)
 cam.set(cv2.CAP_PROP_FRAME_HEIGHT, 720)
 nomeV=''
-cv2.namedWindow("gravar")
 
 def fechar():
-    sys.exit()
-
+    import menu
+    root.destroy()
 def inserir():
     global nomeV
     nomeV=entrada.get()
@@ -36,6 +35,9 @@ Bconfirma.pack(side='right')
 
 root.mainloop()
 
+
+cv2.namedWindow("gravar")
+
 img_counter = 0
 
 
@@ -55,7 +57,6 @@ while True:
     ret, frame = cam.read()
     
     if not ret:
-        print("B.O")
         break
     
 
@@ -65,8 +66,10 @@ while True:
     k = cv2.waitKey(1)
     
     if k%256 == 27:
-        print("Escape hit, closing...")
-        break
+        cam.release()
+        cv2.destroyAllWindows()
+        import menu
+
     elif k%256 == 32:
         nome = nome.strip('1234567890')+str(img_counter)
         cv2.imwrite(nome+'.png',frame)

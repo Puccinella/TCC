@@ -4,6 +4,8 @@ import os
 import sys
 from datetime import datetime
 import time
+from banco_de_dados import cadastro, adicionar_foto
+from deepface import DeepFace
 
 cam = cv2.VideoCapture(0)
 cam.set(cv2.CAP_PROP_FRAME_WIDTH, 1280)
@@ -34,7 +36,7 @@ Bconfirma=tk.Button(root,command=inserir,text=('confirmar'))
 Bconfirma.pack(side='right')
 
 root.mainloop()
-
+pessoa_id = cadastro(nomeV)
 
 cv2.namedWindow("gravar")
 
@@ -74,6 +76,12 @@ while True:
         nome = nome.strip('1234567890')+str(img_counter)
         cv2.imwrite(nome+'.png',frame)
         os.replace(nome+'.png',caminho+'/'+nome+'.png')
+
+        caminho_foto = caminho+'/'+nome+'.png'
+        resultado = DeepFace.represent(img_path=caminho_foto, model_name='Dlib', enforce_detection=False)
+        embedding = resultado[0]["embedding"]
+        adicionar_foto(pessoa_id, embedding)
+
         img_counter += 1
         cv2.imshow("gravar", frame)
         time.sleep(0.67)

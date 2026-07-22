@@ -78,7 +78,7 @@ while True:
         os.replace(nome+'.png',caminho+'/'+nome+'.png')
 
         caminho_foto = caminho+'/'+nome+'.png'
-        resultado = DeepFace.represent(img_path=caminho_foto, model_name='Dlib', enforce_detection=False)
+        resultado = DeepFace.represent(img_path=caminho_foto, model_name='Facenet512', enforce_detection=False)
         embedding = resultado[0]["embedding"]
         adicionar_foto(pessoa_id, embedding)
 

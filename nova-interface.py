@@ -3,11 +3,11 @@ import customtkinter as ctk
 #botao função de ver
 def verificacao():
     app.destroy()
-    import camera
+    import index
 
 def cadastro():
     app.destroy()
-    import index
+    import camera
 
 #inicialização do projeto
 

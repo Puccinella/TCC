@@ -13,7 +13,7 @@ cam.set(cv2.CAP_PROP_FRAME_HEIGHT, 720)
 nomeV=''
 
 def fechar():
-    import menu
+    import nova_interface
     root.destroy()
 def inserir():
     global nomeV
@@ -70,7 +70,7 @@ while True:
     if k%256 == 27:
         cam.release()
         cv2.destroyAllWindows()
-        import menu
+        import nova_interface
 
     elif k%256 == 32:
         nome = nome.strip('1234567890')+str(img_counter)

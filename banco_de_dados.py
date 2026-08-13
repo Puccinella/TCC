@@ -17,12 +17,13 @@
 #);
 import psycopg2
 
+
 def conectar():
     conn = psycopg2.connect(
         host="localhost",
         database="projeto_tcc",
         user="postgres",
-        password="20558970",
+        password="232009",
         port="5432"
     )
     return conn
@@ -79,8 +80,43 @@ def buscar_todos_embeddings():
 
     return dados_pro_reconhecimento
 
+def criar_tabelas():
+    conn = conectar()
+    cursor = conn.cursor()
 
-conn = conectar()
+    cursor.execute("""
+        CREATE TABLE IF NOT EXISTS pessoas (
+            id SERIAL PRIMARY KEY,
+            prontuario VARCHAR(20) UNIQUE NOT NULL
+        )
+    """)
+
+    cursor.execute("""
+        CREATE TABLE IF NOT EXISTS embeddings (
+            id SERIAL PRIMARY KEY,
+            pessoa_id INTEGER NOT NULL,
+            embedding DOUBLE PRECISION[] NOT NULL,
+            CONSTRAINT fk_pessoa
+                FOREIGN KEY (pessoa_id)
+                REFERENCES pessoas(id)
+                ON DELETE CASCADE
+        )
+    """)
+
+    conn.commit()
+    cursor.close()
+    conn.close()
+    print("deu certo")
+
+
+if __name__ == "__main__":
+    criar_tabelas()
+
+
+criar_tabelas()
+
 print ("deu certo")
+
+
 
 #teste do cadastro

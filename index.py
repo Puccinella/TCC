@@ -15,6 +15,9 @@ match=''
 nome=''
 
 x,y,height,width=0,0,0,0
+
+saidas=[]
+
 while True:
     ret, frame = cam.read()
     
@@ -53,12 +56,14 @@ while True:
         else:
             if melhor_jc is not None and menor_distancia < 0.4:
                 nome = melhor_jc
-                saidaEntrada = {
-                    'JC':nome,
-                    'horario':str(datetime.datetime.now())
-                    #'se foi saída ou entrada': vai depender do fisico /=
-                }
-                print(saidaEntrada)
+                if  not saidas or saidas[-1]['horario'] < datetime.datetime.now()-datetime.timedelta(minutes=1):
+                    saidaEntrada = {
+                        'JC':nome,
+                        'horario':datetime.datetime.now()
+                        #'se foi saída ou entrada': vai depender do fisico /=
+                    }
+                    saidas.append(saidaEntrada)
+                    print(saidaEntrada)
                 verificado = True
             else:
                 nome = "N/A"

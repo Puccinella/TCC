@@ -56,7 +56,7 @@ while True:
         else:
             if melhor_jc is not None and menor_distancia < 0.4:
                 nome = melhor_jc
-                if  not saidas or saidas[-1]['horario'] < datetime.datetime.now()-datetime.timedelta(minutes=1):
+                if not saidas or (saidas[-1]['horario'] < datetime.datetime.now()-datetime.timedelta(minutes=1) or saidas[-1]['JC']!=nome):
                     saidaEntrada = {
                         'JC':nome,
                         'horario':datetime.datetime.now()

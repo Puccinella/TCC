@@ -1,4 +1,5 @@
 import cv2
+import datetime
 import time
 from deepface import DeepFace
 from deepface.modules.verification import find_distance
@@ -52,6 +53,12 @@ while True:
         else:
             if melhor_jc is not None and menor_distancia < 0.4:
                 nome = melhor_jc
+                saidaEntrada = {
+                    'JC':nome,
+                    'horario':str(datetime.datetime.now())
+                    #'se foi saída ou entrada': vai depender do fisico /=
+                }
+                print(saidaEntrada)
                 verificado = True
             else:
                 nome = "N/A"
@@ -67,4 +74,4 @@ cam.release()
 
 cv2.destroyAllWindows()
 
-import menu
+import nova_interface

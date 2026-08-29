@@ -8,7 +8,7 @@ from banco_de_dados import cadastro, adicionar_foto
 from deepface import DeepFace
 from ip_camera import IPCamera
 
-IP_CAMERA_URL = 'http://192.168.15.7:8080/video'
+IP_CAMERA_URL = 'http://192.168.15.3:8080/video'
 
 cam = IPCamera(IP_CAMERA_URL)
 nomeV=''

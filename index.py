@@ -5,12 +5,27 @@ from deepface import DeepFace
 from deepface.modules.verification import find_distance
 from banco_de_dados import buscar_todos_embeddings
 from ip_camera import IPCamera
+import urllib.request
 
-IP_CAMERA_URL = 'http://192.168.15.7:8080/video'
+
+tAbertu = 0
+catraca_bloqueada = True   # começa bloqueada
+
+def abrir():
+    urllib.request.urlopen(IP_CATRACA + '/liberado')
+
+def bloquear():
+    urllib.request.urlopen(IP_CATRACA + '/bloqueado')
+
+verificado=False
+
+
+
+IP_CAMERA_URL = 'http://192.168.15.3:8080/video'
+IP_CATRACA = 'http://192.168.15.7'
 
 cam = IPCamera(IP_CAMERA_URL)
 cv2.namedWindow("gravar")
-tI=time.time()
 count = 0
 verificado=False
 match=''
@@ -58,26 +73,30 @@ while True:
         else:
             if melhor_jc is not None and menor_distancia < 0.4:
                 nome = melhor_jc
-                if not saidas or (saidas[-1]['horario'] < datetime.datetime.now()-datetime.timedelta(minutes=1) or saidas[-1]['JC']!=nome):
-                    saidaEntrada = {
-                        'JC':nome,
-                        'horario':datetime.datetime.now()
-                        #'se foi saída ou entrada': vai depender do fisico /=
-                    }
+                if not saidas or (saidas[-1]['horario'] < datetime.datetime.now()-datetime.timedelta(seconds=10) or saidas[-1]['JC']!=nome):
+                    saidaEntrada = {'JC': nome, 'horario': datetime.datetime.now()}
                     saidas.append(saidaEntrada)
                     print(saidaEntrada)
-                verificado = True
+                    abrir()
+                    tAbertu = time.perf_counter()
+                    catraca_bloqueada = False   # agora está aberta
             else:
                 nome = "N/A"
                 x,y,height,width=0,0,0,0
                 verificado = False
 
+    if not catraca_bloqueada and time.perf_counter()-tAbertu > 5:
+        bloquear()
+        catraca_bloqueada = True   # só entra aqui de novo depois do próximo "abrir()"
+
+
     frame = cv2.putText(frame,'match:'+nome,(x,y-10),cv2.FONT_HERSHEY_DUPLEX,1,(0,0,0),2)
     frame = cv2.rectangle(frame,(x,y),(x+width,y+height),(0,0,200),2)
-
+    print(time.perf_counter()-tAbertu)
     cv2.imshow("gravar", frame)
 
 cam.release()
+
 
 cv2.destroyAllWindows()
 

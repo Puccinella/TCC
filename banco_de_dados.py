@@ -103,11 +103,63 @@ def criar_tabelas():
         )
     """)
 
+    cursor.execute("""
+        CREATE TABLE IF NOT EXISTS log (
+            id SERIAL PRIMARY KEY,
+            pessoa_id INTEGER NOT NULL,
+            status VARCHAR(10) NOT NULL,   -- 'entrada' ou 'saida'
+            data_hora TIMESTAMP NOT NULL DEFAULT NOW(),
+            CONSTRAINT fk_pessoa_log
+                FOREIGN KEY (pessoa_id)
+                REFERENCES pessoas(id)
+                ON DELETE CASCADE
+        )
+    """)
+
     conn.commit()
     cursor.close()
     conn.close()
     print("deu certo")
 
+
+
+def registrar_log(prontuario, status):
+    conn = conectar()
+    cursor = conn.cursor()
+    cursor.execute("SELECT id FROM pessoas WHERE prontuario = %s", (prontuario,))
+    resultado = cursor.fetchone()
+    if resultado is None:
+        cursor.close()
+        conn.close()
+        return None
+
+    pessoa_id = resultado[0]
+    cursor.execute(
+        "INSERT INTO log (pessoa_id, status) VALUES (%s, %s)",
+        (pessoa_id, status)
+    )
+    conn.commit()
+    cursor.close()
+    conn.close()
+
+def ultimo_status(prontuario):
+    # isso aq retorna entrada, saida ou None se a pessoa nunca passou pela catraca para distinguir o status de entrada e saída
+    conn = conectar()
+    cursor = conn.cursor()
+    cursor.execute("""
+        SELECT l.status FROM log l
+        JOIN pessoas p ON p.id = l.pessoa_id
+        WHERE p.prontuario = %s
+        ORDER BY l.data_hora DESC
+        LIMIT 1
+    """, (prontuario,))
+    resultado = cursor.fetchone()
+    cursor.close()
+    conn.close()
+    if resultado:
+        return resultado[0]
+    else:
+        return None
 
 if __name__ == "__main__":
     criar_tabelas()

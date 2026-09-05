@@ -3,7 +3,7 @@ import datetime
 import time
 from deepface import DeepFace
 from deepface.modules.verification import find_distance
-from banco_de_dados import buscar_todos_embeddings
+from banco_de_dados import buscar_todos_embeddings, ultimo_status, registrar_log
 from ip_camera import IPCamera
 import urllib.request
 
@@ -73,13 +73,22 @@ while True:
         else:
             if melhor_jc is not None and menor_distancia < 0.4:
                 nome = melhor_jc
-                if not saidas or (saidas[-1]['horario'] < datetime.datetime.now()-datetime.timedelta(seconds=10) or saidas[-1]['JC']!=nome):
-                    saidaEntrada = {'JC': nome, 'horario': datetime.datetime.now()}
-                    saidas.append(saidaEntrada)
-                    print(saidaEntrada)
+
+                if not saidas or (saidas[-1]['horario'] < datetime.datetime.now() - datetime.timedelta(seconds=10) or saidas[-1]['JC'] != nome):
+                    status_anterior = ultimo_status(nome)
+                    if status_anterior == 'entrada':
+                        novo_status = 'saida'
+                    else:
+                        novo_status = 'entrada'
+                    registrar_log(nome, novo_status)
+
+                    registro = {'JC': nome, 'horario': datetime.datetime.now()}
+                    saidas.append(registro)
+                    print(nome, '->', novo_status)
+
                     abrir()
                     tAbertu = time.perf_counter()
-                    catraca_bloqueada = False   # agora está aberta
+                    catraca_bloqueada = False
             else:
                 nome = "N/A"
                 x,y,height,width=0,0,0,0

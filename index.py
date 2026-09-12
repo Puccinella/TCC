@@ -12,16 +12,18 @@ tAbertu = 0
 catraca_bloqueada = True   # começa bloqueada
 
 def abrir():
-    urllib.request.urlopen(IP_CATRACA + '/liberado')
+    print("abrindo a catraca")
+    # urllib.request.urlopen(IP_CATRACA + '/liberado')
 
 def bloquear():
-    urllib.request.urlopen(IP_CATRACA + '/bloqueado')
+    print("bloqueando a catraca")
+    #urllib.request.urlopen(IP_CATRACA + '/bloqueado')
 
 verificado=False
 
 
 
-IP_CAMERA_URL = 'http://192.168.15.3:8080/video'
+IP_CAMERA_URL = 'http://192.168.18.180:8080/video'
 IP_CATRACA = 'http://192.168.15.7'
 
 cam = IPCamera(IP_CAMERA_URL)

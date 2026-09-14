@@ -1,28 +1,84 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-br" data-bs-theme="light">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TCC</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <style>
+      a{
+        text-decoration: none !important;
+      }
+    </style>
+
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined">
 </head>
 
 <body>
     
 <div class="container-fluid mb-3">
-  <nav class="navbar bg-body-tertiary">
+  <nav class="navbar bg-body-tertiary" 
+  id="navbar">
+
     <div class="container-fluid">
-      <a class="navbar-brand">Navbar</a>
+
+      <a class="navbar-brand  
+      d-flex 
+      align-items-center 
+      gap-2">
+        <img src="testeimg.jpg"
+        alt="Logo"
+        width="40"
+        height="40"
+        class="rounded-circle">
+          LOG
+      </a>
+
+      <a href="#">camera</a> <!--precisa colocar o site q vai levar pra camera - se nao der pra fazer é so apagar essa linha-->
+
+          <a class="navbar-brand"
+        
+          >
+            <span class="cor-sol">
+              ☀️
+            </span>
+
+            <span class="btn
+            btn-outline 
+            material-symbols-outlined"
+            id="toggle" 
+            style="padding-right: 3px;
+            padding-left: 3px;">
+              toggle_off
+            </span>
+
+            <span class="cor-lua">
+              🌙
+            </span>
+          </a>
+
+
       <div class="dropdown-center">
-          <a class="btn btn-secondary dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-              CONTA
-           </a>
-  
-    <ul class="dropdown-menu">
-      <li><a class="dropdown-item" href="#">Editar Perfil</a></li>
-      <li><a class="dropdown-item" href="#">Sair</a></li>
-    </ul>
-  
+
+          <a class="btn 
+          btn-secondary 
+          dropdown-toggle" 
+          role="button" 
+          data-bs-toggle="dropdown" aria-expanded="false"
+          style="font-size: small;">
+              ADM
+          </a>
+
+          <ul class="dropdown-menu
+          dropdown-menu-end">
+            <li>
+              <a class="dropdown-item" 
+              href="#">
+                Sair
+              </a>
+            </li>
+
+          </ul>
       </div>
     </div>
   </nav>
@@ -31,15 +87,23 @@
 
 <div class="container-fluid">
   <div class="mb-3 row">
-    <label for="name" class="col-sm-2 col-form-label">PRONTUÁRIO</label>
+    <label class="col-sm-2 col-form-label"
+      for="Prontuario">
+        PRONTUÁRIO
+    </label>
     <div class="col-sm-10">
-      <input type="text" class="form-control" id="Prontuario" value="JC...">
-    </div>
+      <input 
+        type="text" 
+        class="form-control" 
+        id="Prontuario" 
+        placeholder="Digite o prontuário...">
+      </div>
   </div>
+</div>
   
   <div class="mb-3 row container-fluid">
     <label for="DataList" class="col-sm-2 col-form-label">CURSO</label>
-    <div class="col-sm-10"><input class="form-control" list="datalistOptions" id="exampleDataList" placeholder="Type to search..."></div>
+    <div class="col-sm-10"><input class="form-control" list="datalistOptions" id="exampleDataList" placeholder="Clique para procurar..."></div>
     <datalist id="datalistOptions">
       <option value="3 INFO">
       <option value="3 ADM">
@@ -120,5 +184,21 @@
   carregarLog();
 </script>
 
+<script>
+  const toggle = document.getElementById("toggle");
+  const html = document.documentElement;
+
+  toggle.addEventListener("click", () => {
+
+      if (html.getAttribute("data-bs-theme") === "light") {
+          html.setAttribute("data-bs-theme", "dark");
+          toggle.textContent = "toggle_on";
+      } else {
+          html.setAttribute("data-bs-theme", "light");
+          toggle.textContent = "toggle_off";
+      }
+
+  });
+</script>
 
 </html>

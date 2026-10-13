@@ -66,10 +66,10 @@ void loop(){
             
             // turns the GPIOs on and off
             if (header.indexOf("GET /liberado") >= 0) {
-              motor.write(180);
+              motor.write(95);
               Serial.println("aberto");
             } else if (header.indexOf("GET /bloqueado") >= 0) {
-              motor.write(0);
+              motor.write(5);
               Serial.println("fechado");
             }
             

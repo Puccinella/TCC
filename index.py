@@ -23,7 +23,7 @@ verificado=False
 
 
 
-IP_CAMERA_URL = 'http://192.168.18.180:8080/video'
+IP_CAMERA_URL = 'http://192.168.18.139:8080/video'
 IP_CATRACA = 'http://192.168.15.7'
 
 cam = IPCamera(IP_CAMERA_URL)

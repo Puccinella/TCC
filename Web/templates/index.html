@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="pt-br" data-bs-theme="light">
+<head>
+    <meta charset="utf-8">
+    <title>login with overlay image - Bootdey.com</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    
+
+    <style>
+        a{
+            text-decoration: none !important;
+        }
+        #login-title{
+            font-size: 30px;
+            color: #4099f8;
+        }
+
+        @media screen and (min-width: 800px) {
+            #login-row {
+                justify-content: center;
+                align-items: center;
+            }
+        }
+    </style>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined">
+</head>
+<body>
+<div id="main-wrapper" class="container">
+    <div id="login-row" class="row justify-content-center">
+        <div class="col-xl-10">
+            <div class="card border-0">
+                <div class="card-body p-0">
+                    <div class="row no-gutters">
+                        <div class="col-lg-6">
+                            <div class="p-5">
+                                <div class="mb-5">
+                                    <h3 id="login-title" class="h4 font-weight-bold text-theme">Login</h3>
+                                    <a href="#" class="forgot-link float-right text-primary"><span class="cor-sol">
+                                        ☀️
+                                        </span>
+
+                                        <span class="btn
+                                        btn-outline 
+                                        material-symbols-outlined"
+                                        id="toggle" 
+                                        style="padding-right: 3px;
+                                        padding-left: 3px;">
+                                        toggle_off
+                                        </span>
+
+                                        <span class="cor-lua">
+                                        🌙
+                                        </span>
+                                    </a>
+                                </div>
+
+                                <h6 class="h5 mb-0">Bem Vindo!</h6>
+                                <p class="text-muted mt-3 mb-3">Acesse com suas credenciais</p>
+
+                                <form>
+                                    <div class="form-group">
+                                        <label for="exampleInputEmail1">Usuário</label>
+                                        <input type="email" class="form-control" id="exampleInputEmail1">
+                                    </div>
+                                    <div class="form-group mb-5">
+                                        <label for="exampleInputPassword1">Senha</label>
+                                        <input type="password" class="form-control" id="exampleInputPassword1">
+                                    </div>
+                                    <button type="submit" class="btn btn-primary">Login</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <!-- end card-body -->
+            </div>
+            <!-- end card -->
+            <!-- end row -->
+
+        </div>
+        <!-- end col -->
+    </div>
+    <!-- Row -->
+</div>
+
+</body>
+
+<script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/js/bootstrap.bundle.min.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+
+<script>
+    const toggle = document.getElementById("toggle");
+    const html = document.documentElement;
+
+    toggle.addEventListener("click", () => {
+
+        if (html.getAttribute("data-bs-theme") === "light") {
+            html.setAttribute("data-bs-theme", "dark");
+            toggle.textContent = "toggle_on";
+        } else {
+            html.setAttribute("data-bs-theme", "light");
+            toggle.textContent = "toggle_off";
+        }
+
+    });
+</script>
+
+</html>

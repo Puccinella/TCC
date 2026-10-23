@@ -1,0 +1,5 @@
+customtkinter
+opencv-python
+numpy
+psycopg2
+flask

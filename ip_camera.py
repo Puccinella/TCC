@@ -45,19 +45,26 @@ class IPCamera:
             self.buffer += data
 
             start = self.buffer.find(b'\xff\xd8')
-            end = self.buffer.find(b'\xff\xd9')
+            if start == -1:
+                continue
 
-            if start != -1 and end != -1:
-                jpg = self.buffer[start:end + 2]
-                self.buffer = self.buffer[end + 2:]
+            end = self.buffer.find(b'\xff\xd9', start)
+            if end == -1:
+                continue
 
-                frame = cv2.imdecode(
-                    np.frombuffer(jpg, dtype=np.uint8),
-                    cv2.IMREAD_COLOR
-                )
+            jpg = self.buffer[start:end + 2]
+            self.buffer = self.buffer[end + 2:]
 
-                if frame is not None:
-                    return True, frame
+            if not jpg:
+                continue
+
+            frame = cv2.imdecode(
+                np.frombuffer(jpg, dtype=np.uint8),
+                cv2.IMREAD_COLOR
+            )
+
+            if frame is not None:
+                return True, frame
                 # frame corrompido, continua tentando
 
     def release(self):

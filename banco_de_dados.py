@@ -23,7 +23,7 @@ def conectar():
         host="localhost",
         database="projeto_tcc",
         user="postgres",
-        password="20558970",
+        password="12541254",
         port="5432"
     )
     return conn

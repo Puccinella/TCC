@@ -1,8 +1,8 @@
 #include <WiFi.h>
 #include <ESP32Servo.h>
 
-const char* ssid = "ADEMIR MEIRE";
-const char* password = "arthurrr261223";
+String ssid;
+String password;
 
 // Set web server port number to 80
 WiFiServer server(80);
@@ -20,18 +20,40 @@ unsigned long previousTime = 0;
 // Define timeout time in milliseconds (example: 2000ms = 2s)
 const long timeoutTime = 500;
 
+String lerLinhaSerial(const char* pergunta) {
+  Serial.println(pergunta);
+  while (Serial.available()) Serial.read();
+
+  String entrada = "";
+  while (true) {
+    if (Serial.available()) {
+      char c = Serial.read();
+      if (c == '\n' || c == '\r') {
+        if (entrada.length() > 0) break;
+      } else {
+        entrada += c;
+      }
+    }
+    delay(10);
+  }
+  return entrada;
+}
+
 void setup() {
   Serial.begin(115200);
   motor.attach(2);
-  // Connect to Wi-Fi network with SSID and password
+
+  ssid     = lerLinhaSerial("Digite o SSID:");
+  password = lerLinhaSerial("Digite a senha:");
+
   Serial.print("Connecting to ");
   Serial.println(ssid);
-  WiFi.begin(ssid, password);
+  WiFi.begin(ssid.c_str(), password.c_str());
+
   while (WiFi.status() != WL_CONNECTED) {
     delay(500);
     Serial.print(".");
   }
-  // Print local IP address and start web server
   Serial.println("");
   Serial.println("WiFi connected.");
   Serial.println("IP address: ");
